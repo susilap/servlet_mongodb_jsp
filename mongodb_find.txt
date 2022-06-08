@@ -1,0 +1,39 @@
+package JDBC;
+
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+
+import java.util.ArrayList;
+
+import javax.swing.text.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+
+public class demo {
+
+	public static void main(String[] args) {
+        try (var mongoClient = MongoClients.create("mongodb://localhost:27017")) {
+
+            var database = mongoClient.getDatabase("Employee");
+
+            MongoCollection<org.bson.Document> collection = database.getCollection("emp");
+
+            try (MongoCursor<org.bson.Document> cur = collection.find().iterator()) {
+
+                while (cur.hasNext()) {
+
+                    var doc = cur.next();
+                    var users = new ArrayList < > (((org.bson.Document) doc).values());
+
+              System.out.printf("%d %s: %s%n", users.get(1), users.get(2),users.get(3));
+                }
+               
+                
+            }
+        }
+    }
+
+}
